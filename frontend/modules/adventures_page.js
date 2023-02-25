@@ -79,7 +79,8 @@ function filterByCategory(list, categoryList) {
 
   const filteredListByCategory = list.filter(
     (item)=>{
-      return (categoryList.category.includes(item.category))
+      const result1 = categoryList.category.includes(item.category);
+      return result1;
     }
   )
  
