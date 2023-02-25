@@ -80,11 +80,11 @@ function filterByCategory(list, categoryList) {
   let filteredList=[];
   console.log(list);
   list.filter(function (e) {
-    if(categoryList.includes(e.category))
-      filteredList.push(e);   
-      });
+  if(categoryList.includes(e.category))
+    filteredList.push(e);   
+  });
 
-      return filteredList;
+  return filteredList;
 }
 
 // filters object looks like this filters = { duration: "", category: [] };
@@ -101,30 +101,27 @@ function filterFunction(list, filters) {
 
 
   // Place holder for functionality to work in the Stubs
-  let filterdlist ;
-  let filterDuration = filters.duration;
-  const filterDurationArr = filterDuration.split("-");
-   
+  let filteredlist =[]
+  let arr = filters["duration"].split("-")
 
-   
-  let low = filterDurationArr[0]; 
-  let high = filterDurationArr[1]
-  if(filters.duration == "" && filters.category.length==0 ){
-    filterdlist = list;
+  // TODO: MODULE_FILTERS
+  // 1. Handle the 3 cases detailed in the comments above and return the filtered list of adventures
+  // 2. Depending on which filters are needed, invoke the filterByDuration() and/or filterByCategory() methods
+  if (filters["category"].length>0&&filters["duration"].length>0) {
+    filteredlist=filterByCategory(list,filters.category)
+    filteredlist=filterByDuration(filteredlist,parseInt(arr[0]),parseInt(arr[1]))
   }
-  else if(filters.duration == "" && filters.category.length>0){
-    filterdlist = filterByCategory(list, filters);
+  else if (filters["category"].length>0){
+    filteredlist=filterByCategory(list,filters.category);
+  } 
+  else if (filters["duration"].length>0){
+    filteredlist=filterByDuration(list,parseInt(arr[0]),parseInt(arr[1]))
   }
-  else if(filters.duration !== "" && filters.category.length==0){
-    filterdlist = filterByDuration(list,low,high)
+  else {
+    return list;
   }
-  else{
-    filterdlist = filterByDuration(filterByCategory(list,filters),low,high)
-  }
-  
-   
   // Place holder for functionality to work in the Stubs
-  return filterdlist;
+  return filteredlist;
 }
 
 //Implementation of localStorage API to save filters to local storage. This should get called everytime an onChange() happens in either of filter dropdowns
