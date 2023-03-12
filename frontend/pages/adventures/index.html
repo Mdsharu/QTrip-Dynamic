@@ -116,9 +116,7 @@
         // The structure of "filters" object is { duration : "6-10", category : [] }, which basically means duration is single-value filter and category is multi-value filter
 
         let filters =
-            getFiltersFromLocalStorage() !== null
-                ? getFiltersFromLocalStorage()
-                : { duration: "", category: [] };
+            getFiltersFromLocalStorage() !== null ? getFiltersFromLocalStorage() : { duration : "", category : [] };
 
 
         //entry point (executed when DOM is loaded)
@@ -146,15 +144,28 @@
             // TODO: MODULE_FILTERS
             // 1. Change the DOM to show the selected duration filter. Use the provided input event
             // 2. Invoke saveFiltersToLocalStorage here
-            
+            document.getElementById("data").textContent = "";
+            filters.duration = event.target.value;
+            let filteredAdventures = filterFunction(adventures, filters);
+            addAdventureToDOM(filteredAdventures);
+
+            document.getElementById("category-list").textContent = "";
+            generateFilterPillsAndUpdateDOM(filters);
         }
 
         //executed when clear button is clicked on duration filter dropdown
         function clearDuration(event) {
             // TODO: MODULE_FILTERS
             // 1. Change the DOM to clear the Duration filter. Refer clearCategory() below
-            // 2. Invoke saveFiltersToLocalStorage here
+            document.getElementById("data").textContent = "";
+            document.getElementById("duration-select").selectedIndex= 0;
+            filters["duration"]="";
+            let filteredAdventures = filterFunction(adventures, filters);
+            addAdventureToDOM(filteredAdventures);
 
+            // 2. Invoke saveFiltersToLocalStorage here
+            saveFiltersToLocalStorage(filters);
+            
         }
 
 

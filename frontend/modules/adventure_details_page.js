@@ -36,7 +36,7 @@ function addAdventureDetailsToDOM(adventure) {
   document.getElementById("adventure-subtitle").append(adventure.subtitle);
  // console.log(adventure["images"]);
   for (let i = 0; i < adventure.images.length; i++) {
-  var div = document.createElement("div");
+    var div = document.createElement("div");
   
     var img = document.createElement("img");
     img.setAttribute("class","activity-card-image");
@@ -53,7 +53,7 @@ function addAdventureDetailsToDOM(adventure) {
 function addBootstrapPhotoGallery(images) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Add the bootstrap carousel to show the Adventure images
-  let photoGallery = document.getElementById("photo-gallery")
+  let photoGallery = document.getElementById("photo-gallery");
    photoGallery.innerHTML=`
    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
    <div class="carousel-indicators">
@@ -71,14 +71,12 @@ function addBootstrapPhotoGallery(images) {
      <span class="carousel-control-next-icon" aria-hidden="true"></span>
      <span class="visually-hidden">Next</span>
    </button>
- </div>
-   `
-   images.map((key,index)=>{
+ </div>`
+
+   images.map((key,index) => {
      let divElement = document.createElement("div");
-     divElement.className=`carousel-item ${index===0?'active':''}`;
-     divElement.innerHTML=`
-       <img src=${key} class="activity-card-image pb-3"/>
-     `;
+     divElement.className = `carousel-item ${index===0?'active':''}`;
+     divElement.innerHTML = `<img src=${key} class="activity-card-image pb-3"/>`;
      document.getElementById("carousel-inner").appendChild(divElement);
    });
  }
@@ -102,7 +100,7 @@ function conditionalRenderingOfReservationPanel(adventure) {
 function calculateReservationCostAndUpdateDOM(adventure, persons) {
   // TODO: MODULE_RESERVATIONS
   // 1. Calculate the cost based on number of persons and update the reservation-cost field
-  document.getElementById("reservation-cost").innerHTML=persons*adventure["costPerHead"];
+  document.getElementById("reservation-cost").innerHTML = persons*adventure["costPerHead"];
 }
 
 //Implementation of reservation form submission
@@ -110,22 +108,22 @@ function captureFormSubmit(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. Capture the query details and make a POST API call using fetch() to make the reservation
   // 2. If the reservation is successful, show an alert with "Success!" and refresh the page. If the reservation fails, just show an alert with "Failed!".
-  const myForm=document.getElementById("myForm");
- myForm.addEventListener("submit",async(e)=>{
+  const myForm = document.getElementById("myForm");
+  myForm.addEventListener("submit",async(e) => {
    e.preventDefault();
-   let  data={
+   let data = {
      name:myForm.elements["name"].value,
      date:new Date(myForm.elements["date"].value),
      person:myForm.elements["person"].value,
      adventure:adventure["id"]
    }
    console.log(data);
-   try{
+   try {
      const url=`${config.backendEndpoint}/reservations/new`;
      const res=await fetch(url,{
-       method:"POST",
+      method:"POST",
       headers: {'Content-Type': 'application/json'},
-       body:JSON.stringify(data)
+      body:JSON.stringify(data)
      });
     alert("success");
     window.location.reload();
@@ -143,10 +141,10 @@ function showBannerIfAlreadyReserved(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. If user has already reserved this adventure, show the reserved-banner, else don't
   console.log(adventure);
-  if(adventure["reserved"]==true)
-  document.getElementById("reserved-banner").style.display="block";
+  if (adventure["reserved"] == true)
+    document.getElementById("reserved-banner").style.display="block";
   else
-  document.getElementById("reserved-banner").style.display="none";
+    document.getElementById("reserved-banner").style.display="none";
 }
 
 export {
